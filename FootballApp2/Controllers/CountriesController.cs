@@ -18,7 +18,7 @@ namespace FootballApp2.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        /*[HttpGet]
         public async Task<ActionResult<IEnumerable<Country>>> GetCountries()
         {
             if (_context.Countries == null)
@@ -44,7 +44,7 @@ namespace FootballApp2.Controllers
             }
 
             return country;
-        }
+        }*/
         // GET: Countries
         public async Task<IActionResult> Index()
         {

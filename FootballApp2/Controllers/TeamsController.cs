@@ -47,7 +47,7 @@ namespace FootballApp2.Controllers
         // GET: Teams/Create
         public IActionResult Create()
         {
-            ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Id");
+            ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Name");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace FootballApp2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Id", team.CountryId);
+            ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Name", team.CountryId);
             return View(team);
         }
 
@@ -81,7 +81,7 @@ namespace FootballApp2.Controllers
             {
                 return NotFound();
             }
-            ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Id", team.CountryId);
+            ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Name", team.CountryId);
             return View(team);
         }
 
@@ -117,7 +117,7 @@ namespace FootballApp2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Id", team.CountryId);
+            ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Name", team.CountryId);
             return View(team);
         }
 

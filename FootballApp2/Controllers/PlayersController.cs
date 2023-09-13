@@ -22,6 +22,7 @@ namespace FootballApp2.Controllers
         public async Task<IActionResult> Index()
         {
             var dbfootballContext = _context.Players.Include(p => p.Team);
+            //var dbfootballContext = _context.Players;
             return View(await dbfootballContext.ToListAsync());
         }
 
@@ -47,7 +48,7 @@ namespace FootballApp2.Controllers
         // GET: Players/Create
         public IActionResult Create()
         {
-            ViewData["TeamId"] = new SelectList(_context.Teams, "Id", "Id");
+            ViewData["TeamId"] = new SelectList(_context.Teams, "Id", "Name");
             return View();
         }
 
@@ -58,13 +59,15 @@ namespace FootballApp2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Position,Price,BirthDate,TeamId,PlayerUrl")] Player player)
         {
+            if (player.BirthDate.Year<1800) ModelState.AddModelError("BirthDate", "Рік народження має бути більше 1800");
+            if (player.BirthDate.Year > DateTime.Now.Year) ModelState.AddModelError("BirthDate", "Рік народження має бути коректним");
             if (ModelState.IsValid)
             {
                 _context.Add(player);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TeamId"] = new SelectList(_context.Teams, "Id", "Id", player.TeamId);
+            ViewData["TeamId"] = new SelectList(_context.Teams, "Id", "Name", player.TeamId);
             return View(player);
         }
 
@@ -81,7 +84,8 @@ namespace FootballApp2.Controllers
             {
                 return NotFound();
             }
-            ViewData["TeamId"] = new SelectList(_context.Teams, "Id", "Id", player.TeamId);
+            ViewData["TeamId"] = new SelectList(_context.Teams, "Id", "Name", player.TeamId);
+            //ViewData["TeamName"] = new SelectList(_context.Teams, "Name", "Name", player.TeamId);
             return View(player);
         }
 
@@ -117,7 +121,7 @@ namespace FootballApp2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TeamId"] = new SelectList(_context.Teams, "Id", "Id", player.TeamId);
+            ViewData["TeamId"] = new SelectList(_context.Teams, "Id", "Name", player.TeamId);
             return View(player);
         }
 
