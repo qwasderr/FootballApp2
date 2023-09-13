@@ -3,16 +3,26 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - FootballApp2</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <title>@ViewData["Title"] - WebApplication2</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min_5.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/FootballApp2.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebApplication2.styles.css" asp-append-version="true" />
 </head>
-<body>
+
+<body class="gradient-custom">
+    <style>
+        .gradient-custom {
+            /* fallback for old browsers */
+            background: rgb(242,239,17);
+            background: linear-gradient(0deg, rgba(242,239,17,1) 0%, rgba(45,253,251,1) 100%);
+            
+        }
+    </style>
+    
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark" style="background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(250,57,0,1) 50%, rgba(0,84,183,1) 100%);">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">FootballApp2</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><b>Футбольна база</b></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -20,25 +30,32 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Політика приватності</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link" asp-area="" asp-controller="Countries" asp-action="Index">Країни</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Players" asp-action="Index">Гравці</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Teams" asp-action="Index">Команди</a>
                         </li>
                     </ul>
+                    <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container" style="margin-top: 50px;">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted" style="position: absolute;left: 0;bottom: 0; width=120%">
         <div class="container">
-            &copy; 2023 - FootballApp2 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2023 - Футбольна база - <a asp-area="" asp-controller="Home" asp-action="Privacy">Політика приватності</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
