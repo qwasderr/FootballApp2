@@ -3,6 +3,8 @@ using FootballApp2.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using FootballApp2.Data;
+using FootballApp2.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,11 +19,13 @@ options.Configuration = builder.Configuration["AZURE_REDIS_CONNECTIONSTRING"];
 options.InstanceName = "SampleInstance";
 });*/
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer("Identity_conn"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityCSAzure")));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddTransient<IEmailSender, EmailService>();
+builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 //builder.Services.BuildServiceProvider().GetService<DbfootballContext>().Database.Migrate();
 
 var app = builder.Build();
@@ -42,7 +46,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 //app.MapControllers();
 //app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
