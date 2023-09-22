@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Metadata;
-namespace FootballApp2.Data.Migrations
+
+namespace FootballApp2.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {
