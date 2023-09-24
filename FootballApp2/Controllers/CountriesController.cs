@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FootballApp2.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FootballApp2.Controllers
 {
+    
     public class CountriesController : Controller
     {
         private readonly DbfootballContext _context;

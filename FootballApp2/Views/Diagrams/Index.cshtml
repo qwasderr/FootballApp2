@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Діаграми";
+}
+<style>
+    #chart1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+<div class="charts_container">
+    <div id="chart1"></div>
+</div>
+
+@section scripts{
+    <script type "text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            $.get('/api/Chart/JsonData', function (JsonData) {
+                data = google.visualization.arrayToDataTable(JsonData, false);
+                var option = {
+                    title: "Діаграма співвідношення кількості команд наявних в базі країн",
+                    is3D: true,
+                    width: 700,
+                    height: 600
+                };
+                chart = new google.visualization.PieChart(document.getElementById('chart1'));
+                chart.draw(data, option);
+
+            })
+        }
+    </script>
+
+   
+    }
+
+
+

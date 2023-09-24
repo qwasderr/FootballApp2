@@ -30,6 +30,13 @@ namespace FootballApp2.Controllers.api
             {
                 return NotFound();
             }
+            if (_context.Teams != null)
+            {
+                foreach (var country in _context.Countries)
+                {
+                    country.Teams = await _context.Teams.Where(t => t.CountryId == country.Id).ToListAsync();
+                }
+            }
             return await _context.Countries.ToListAsync();
         }
 
@@ -41,13 +48,13 @@ namespace FootballApp2.Controllers.api
             {
                 return NotFound();
             }
-            var country = await _context.Countries.FindAsync(id);
-
+            //var country = await _context.Countries.FindAsync(id);
+            var country = _context.Countries.Where(c => id == c.Id).FirstOrDefault();
             if (country == null)
             {
                 return NotFound();
             }
-
+            if (_context.Teams!=null) country.Teams = _context.Teams.Where(t => t.CountryId == id).ToList();
             return country;
         }
 
@@ -91,10 +98,18 @@ namespace FootballApp2.Controllers.api
             {
                 return Problem("Entity set 'LBAPIContext.Countries'  is null.");
             }
-            _context.Countries.Add(country);
+            /*_context.Countries.Add(country);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCountry", new { id = country.Id }, country);
+            return CreatedAtAction("GetCountry", new { id = country.Id }, country);*/
+            var t = (_context.Countries.Where(a => a.Name == country.Name)).FirstOrDefault();
+            if (t == null)
+            {
+                _context.Countries.Add(country);
+                await _context.SaveChangesAsync();
+                return CreatedAtAction("GetCountry", new { id = country.Id }, country);
+            }
+            else return Problem("A country with the same name exists");
         }
 
         // DELETE: api/Countries/5
@@ -105,7 +120,8 @@ namespace FootballApp2.Controllers.api
             {
                 return NotFound();
             }
-            var country = await _context.Countries.FindAsync(id);
+            var country = _context.Countries.Where(c => id == c.Id).FirstOrDefault();
+            //var country = await _context.Countries.FindAsync(id);
             if (country == null)
             {
                 return NotFound();
