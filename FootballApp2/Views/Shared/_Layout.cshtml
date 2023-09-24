@@ -20,6 +20,11 @@
             background: linear-gradient(0deg, rgba(242,239,17,1) 0%, rgba(45,253,251,1) 100%);
             
         }
+
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
     </style>
     
     <header>
@@ -44,6 +49,9 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Teams" asp-action="Index">Команди</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Diagrams" asp-action="Index">Діаграми</a>
+                        </li>
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -56,7 +64,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted" style="position: absolute;left: 0;bottom: 0; width=120%">
+    <footer class="border-top footer text-muted" style="position: absolute;left: 0;bottom: 0; width:120%">
         <div class="container">
             &copy; 2023 - Футбольна база - <a asp-area="" asp-controller="Home" asp-action="Privacy">Політика приватності</a>
         </div>

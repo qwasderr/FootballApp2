@@ -5,12 +5,18 @@ using Microsoft.AspNetCore.Identity;
 using FootballApp2.Data;
 using FootballApp2.Services;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Mvc;
+using FootballApp2.ElasticSearch;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 //builder.Services.AddRazorPages();
-builder.Services.AddControllersWithViews();
+//builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
 //builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddDbContext<DbfootballContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING")));
 /*builder.Services.AddStackExchangeRedisCache(options =>
@@ -26,8 +32,17 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddTransient<IEmailSender, EmailService>();
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
+builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.AuthorizePage("/Home/Privacy");
+});
+builder.Services.AddAuthentication().AddGoogle(googleOptions =>
+{
+    googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+    googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+});
 //builder.Services.BuildServiceProvider().GetService<DbfootballContext>().Database.Migrate();
-
+builder.Services.AddElasticsearch(builder.Configuration);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -55,3 +70,4 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 app.Run();
+public partial class Program { }
