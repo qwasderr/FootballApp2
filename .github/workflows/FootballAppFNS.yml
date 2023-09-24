@@ -6,7 +6,7 @@ on:
 env:
   AZURE_WEBAPP_NAME: FootballAppFNS
   AZURE_WEBAPP_PACKAGE_PATH: ./published
-  CONFIGURATION: Release
+  CONFIGURATION: Development
   DOTNET_CORE_VERSION: 7.0.x
   WORKING_DIRECTORY: ./FootballApp2/FootballApp2.csproj
 jobs:
