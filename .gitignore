@@ -360,4 +360,4 @@ MigrationBackup/
 .ionide/
 
 # Fody - auto-generated XML schema
-FodyWeavers.xsd"C:\FootballApp2\FootballApp2\appsettings.json" 
+FodyWeavers.xsd"./FootballApp2/appsettings.json" 
