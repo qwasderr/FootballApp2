@@ -52,7 +52,7 @@ namespace FootballApp2Tests
                 });
 
             // Act
-            var response = await client.GetAsync("/Home/Privacy");
+            var response = await client.GetAsync("/Diagrams");
 
             // Assert
             Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
@@ -77,7 +77,7 @@ namespace FootballApp2Tests
                 });
             ;
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Test");
-            var response = await client.GetAsync("/Home/Privacy");
+            var response = await client.GetAsync("https://localhost/Diagrams");
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 

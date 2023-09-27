@@ -55,14 +55,8 @@
         border: 0;
         margin-top: 5px;
     }
-    #sofa-player{
-        margin-top:30px;
-        height: 728px !important;
-        max-width:420px !important;
-        width: 100% !important;
-    }
 </style>
-<h1 style="text-align:center">Деталі гравця</h1>
+<h1 style="text-align:center">Деталі вибраного гравця</h1>
 <div>
     @{
         var picurl = Model.PlayerUrl + "/image";
@@ -71,7 +65,7 @@
         var widget = "https://widgets.sofascore.com/embed/player/" + substrings[len-1];
     }
     <div id="bc">
-    
+    <h2>Деталі гравця</h2>
     <hr />
     <div id="bc1">
     <div class="headdiv" >
@@ -150,7 +144,10 @@
 </div>
 <div id="widget">
     <iframe id="sofa-player" src=@widget
-            frameborder="0" scrolling="no"></iframe>
+                frameborder="0" scrolling="no" style="margin-top:30px;
+        height: 728px !important;
+        max-width:420px !important;
+        width: 100% !important;"></iframe>
     </div>
     <div class="buttons">
         <a asp-action="Edit" asp-route-id="@Model?.Id" class="button">Редагувати</a> |

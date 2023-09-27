@@ -83,6 +83,43 @@ app.MapControllerRoute(
    name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+app.Use(async (context, next) =>
+{
+    string sHost = context.Request.Host.HasValue == true ? context.Request.Host.Value : "";
+    sHost = sHost.ToLower();
+    string sPath = context.Request.Path.HasValue == true ? context.Request.Path.Value : "";
+    string sQuerystring = context.Request.QueryString.HasValue == true ? context.Request.QueryString.Value : "";
+    if (!context.Request.IsHttps)
 
+    {
+        string new_https_Url = "https://" + sHost;
+        if (sPath != "")
+        {
+            new_https_Url = new_https_Url + sPath;
+        }
+        if (sQuerystring != "")
+        {
+            new_https_Url = new_https_Url + sQuerystring;
+        }
+        context.Response.Redirect(new_https_Url);
+        return;
+    }
+    if (sHost.IndexOf("www.") == 0)
+    {
+        string new_Url_without_www = "https://" + sHost.Replace("www.", "");
+        if (sPath != "")
+        {
+            new_Url_without_www = new_Url_without_www + sPath;
+        }
+        if (sQuerystring != "")
+        {
+            new_Url_without_www = new_Url_without_www + sQuerystring;
+        }
+        context.Response.Redirect(new_Url_without_www);
+        return;
+    }
+    await next();
+});
+//app.UseRewriter(new RewriteOptions().AddRedirectToNonWwwPermanent().AddRedirectToHttpsPermanent());
 app.Run();
 public partial class Program { }

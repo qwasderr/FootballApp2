@@ -18,9 +18,10 @@ namespace FootballApp2.Controllers
         {
             return View();
         }
-        [Authorize]
+        
         public IActionResult Privacy()
         {
+            //return Redirect("~/Home/Privacy");
             return View();
         }
 
