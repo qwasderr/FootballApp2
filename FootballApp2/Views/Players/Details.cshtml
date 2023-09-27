@@ -28,18 +28,6 @@
         text-align: left;
         margin-bottom: 2px;
     }
-
-    .headdiv{
-    grid-column-gap: 16px;
-    align-items: center;
-        
-    border-bottom: 1px solid var(--color-support-1);
-    border-radius: 0 0 8px 8px;
-    display: flex;
-    padding: 12px 16px 16px;
-    box-sizing: border-box;
-    }
-
     .row {
         font-family: cursive, sans-serif;
         background-color: #2ecc71;
@@ -71,8 +59,6 @@
         width: fit-content;
         word-break: break-word;
         border: 0;
-    }
-    .buttons{
         margin-top: 5px;
     }
     #sofa-player{
@@ -80,21 +66,9 @@
         height: 728px !important;
         max-width:420px !important;
         width: 100% !important;
-
-    }
-    #bc{
-        display: flex;
-        justify-content: center;
-    }
-    #block2{
-        display:inline;
-    }
-    #widget{
-        display: flex;
-        justify-content: center;
-        align-items: center;
     }
 </style>
+<h1 style="text-align:center">Деталі гравця</h1>
 <div>
     @{
         var picurl = Model.PlayerUrl + "/image";

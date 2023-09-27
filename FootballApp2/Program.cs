@@ -13,11 +13,14 @@ using Microsoft.FeatureManagement;
 using System.Configuration;
 using Microsoft.FeatureManagement.FeatureFilters;
 using FootballApp2.Services;
+using Microsoft.AspNetCore.Rewrite;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 //builder.Services.AddRazorPages();
 //builder.Services.AddControllersWithViews();
+
 builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
@@ -80,5 +83,6 @@ app.MapControllerRoute(
    name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+app.UseRewriter(new RewriteOptions().AddRedirectToWwwPermanent().AddRedirectToHttpsPermanent());
 app.Run();
 public partial class Program { }
