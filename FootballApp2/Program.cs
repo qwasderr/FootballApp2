@@ -7,7 +7,12 @@ using FootballApp2.Services;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using FootballApp2.ElasticSearch;
-
+using Syncfusion.JavaScript.DataVisualization.Models;
+using Mapbox.AspNetCore.DependencyInjection;
+using Microsoft.FeatureManagement;
+using System.Configuration;
+using Microsoft.FeatureManagement.FeatureFilters;
+using FootballApp2.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -17,6 +22,10 @@ builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 );
+builder.Services.AddSingleton<ITargetingContextAccessor,
+            HttpContextTargetingContextAccessor>();
+builder.Services.AddFeatureManagement(builder.Configuration.GetSection("Features")).AddFeatureFilter<TargetingFilter>();
+//builder.Services.AddFeatureFilter<TargetingFilter>();
 //builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddDbContext<DbfootballContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING")));
 /*builder.Services.AddStackExchangeRedisCache(options =>
@@ -36,6 +45,8 @@ builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizePage("/Home/Privacy");
 });
+
+builder.Services.AddMapBoxServices(options => options.UseApiKey(builder.Configuration["MapboxApiKey"]));
 builder.Services.AddAuthentication().AddGoogle(googleOptions =>
 {
     googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];

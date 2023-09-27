@@ -1,13 +1,114 @@
 ﻿@model FootballApp2.Models.Player
-
 @{
     ViewData["Title"] = "Деталі гравця";
 }
+@using System;
+@using System.Net;
+@using FootballApp2.Models.JsonModels;
+@using System.Text.Json;
+@using System.Text.RegularExpressions;
+@{
+    HttpClient _client = new HttpClient();
+    string uri = Model.PlayerUrl;
+    using HttpResponseMessage response = await _client.GetAsync(uri);
+    var resp = await response.Content.ReadAsStringAsync();
+    Rootobject? player =
+               JsonSerializer.Deserialize<Rootobject>(resp);
+    var a = 1;
+}
+<style>
+    #image{
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    #playername{
+        font: 700 18px / 1.33 "Sofascore Sans", sans-serif;
+        margin: 5px;
+        text-align: left;
+        margin-bottom: 2px;
+    }
 
-<h1>Деталі</h1>
+    .headdiv{
+    grid-column-gap: 16px;
+    align-items: center;
+        
+    border-bottom: 1px solid var(--color-support-1);
+    border-radius: 0 0 8px 8px;
+    display: flex;
+    padding: 12px 16px 16px;
+    box-sizing: border-box;
+    }
 
+    .row {
+        font-family: cursive, sans-serif;
+        background-color: #2ecc71;
+        color: white;
+        padding: 10px;
+        border-radius: 4px;
+        box-shadow: 2px 2px 20px 23px #7fecad;
+         display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .button {
+        background: #5E5DF0;
+        border-radius: 999px;
+        box-shadow: #5E5DF0 0 10px 20px -10px;
+        box-sizing: border-box;
+        color: #FFFFFF;
+        cursor: pointer;
+        font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 24px;
+        opacity: 1;
+        outline: 0 solid transparent;
+        padding: 8px 18px;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        width: fit-content;
+        word-break: break-word;
+        border: 0;
+    }
+    .buttons{
+        margin-top: 5px;
+    }
+    #sofa-player{
+        margin-top:30px;
+        height: 728px !important;
+        max-width:420px !important;
+        width: 100% !important;
+        
+    }
+    #bc{
+        display: flex;
+        justify-content: center;
+    }
+    #block2{
+        display:inline;
+    }
+    #widget{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
 <div>
-    <h4>Гравець</h4>
+    @{
+        var picurl = Model.PlayerUrl + "/image";
+        string[] substrings = Model.PlayerUrl.Split("/");
+        var len = substrings.Length;
+        var widget = "https://widgets.sofascore.com/embed/player/" + substrings[len-1];
+    }
+    <div id="bc">
+    
+    <hr />
+    <div id="bc1">
+    <div class="headdiv" >
+    <img src=@picurl id="image"></img>
+        <a id="playername">@player.player.name</a>
+    </div>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -22,6 +123,31 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Position)
         </dd>
+        <dt class="col-sm-2">
+            Назва турніру
+        </dt>
+        <dd class="col-sm-10">
+            @player.player.team.tournament.name
+        </dd>
+        <dt class="col-sm-2">
+            Номер
+        </dt>
+        <dd class="col-sm-10">
+            @player.player.jerseyNumber
+        </dd>
+        <dt class="col-sm-2">
+            Зріст
+        </dt>
+        <dd class="col-sm-10">
+            @player.player.height
+        </dd>
+        <dt class="col-sm-2">
+            Ведуча нога
+        </dt>
+        <dd class="col-sm-10">
+            @player.player.preferredFoot
+        </dd>
+
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Price)
         </dt>
@@ -35,21 +161,21 @@
             @Html.DisplayFor(model => model.BirthDate)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PlayerUrl)
-        </dt>
-        <dd class = "col-sm-10">
-            <a href="@Html.DisplayFor(model => model.PlayerUrl)" target="_blank">@Html.DisplayFor(model => model.PlayerUrl)</a>
-
-        </dd>
-        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Team)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Team.Name)
         </dd>
     </dl>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Редагувати</a> |
-    <a asp-action="Index">Повернутись назад</a>
+<div id="widget">
+    <iframe id="sofa-player" src=@widget
+            frameborder="0" scrolling="no"></iframe>
+    </div>
+    <div class="buttons">
+        <a asp-action="Edit" asp-route-id="@Model?.Id" class="button">Редагувати</a> |
+        <a asp-action="Index" class="button">Повернутись назад</a>
+    </div>
 </div>
+

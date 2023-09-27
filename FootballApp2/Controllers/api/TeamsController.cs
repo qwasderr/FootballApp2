@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FootballApp2.Models;
+using FootballApp2.Services;
+using System.Transactions;
+using Nest;
 
 namespace FootballApp2.Controllers.api
 {
@@ -21,14 +24,27 @@ namespace FootballApp2.Controllers.api
         }
 
         // GET: api/Teams
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Team>>> GetTeams()
+        //[HttpGet("{skip}/{limit}")]
+
+        [HttpGet("params")]
+        public async Task<ActionResult<PaginationTeam>> GetTeams([FromQuery] int skip, [FromQuery] int limit)
         {
             if (_context.Teams == null)
             {
                 return NotFound();
             }
-            return await _context.Teams.ToListAsync();
+            //_context.Teams.OrderBy(on => on.Name).Skip((config.PageNumber - 1) * config.PageSize).Take(config.PageSize).ToList();
+            //return await _context.Teams.ToListAsync();
+            foreach (var team in _context.Teams) { team.Country=_context.Countries.Where(t=>t.Id==team.CountryId).FirstOrDefault(); }
+            var res= await _context.Teams.OrderBy(on => on.Name).Skip(skip*limit).Take(limit).ToListAsync();
+            PaginationTeam pag=new PaginationTeam();
+            pag.limit=limit;
+            pag.skip=skip;
+            double a = _context.Teams.Count() / (double)limit;
+            pag.total = (int)Math.Ceiling(a);
+            pag.team = res;
+            pag.nextLink = skip+1<pag.total ? $"/api/Teams/?skip={skip+1}&limit={limit}" : null;
+            return pag;
         }
 
         // GET: api/Teams/5

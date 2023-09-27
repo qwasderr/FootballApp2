@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FootballApp2.Models;
 using Microsoft.AspNetCore.Authorization;
+using NuGet.Protocol;
+using SQLitePCL;
 
 namespace FootballApp2.Controllers
 {
@@ -78,7 +80,11 @@ namespace FootballApp2.Controllers
         {
             return View();
         }
-
+        public JsonResult CountryNames(string s)
+        {
+            var res = (from temp in _context.Countries where temp.Name.StartsWith(s) select temp).ToList();
+            return Json(res);
+        }
         // POST: Countries/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.

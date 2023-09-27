@@ -1,0 +1,129 @@
+{
+  "team": {
+    "name": "Liverpool",
+    "slug": "liverpool",
+    "shortName": "Liverpool",
+    "gender": "M",
+    "sport": {
+      "name": "Football",
+      "slug": "football",
+      "id": 1
+    },
+    "category": {
+      "name": "England",
+      "slug": "england",
+      "sport": {
+        "name": "Football",
+        "slug": "football",
+        "id": 1
+      },
+      "id": 1,
+      "flag": "england",
+      "alpha2": "EN"
+    },
+    "tournament": {
+      "name": "Premier League",
+      "slug": "premier-league",
+      "category": {
+        "name": "England",
+        "slug": "england",
+        "sport": {
+          "name": "Football",
+          "slug": "football",
+          "id": 1
+        },
+        "id": 1,
+        "flag": "england",
+        "alpha2": "EN"
+      },
+      "uniqueTournament": {
+        "name": "Premier League",
+        "slug": "premier-league",
+        "primaryColorHex": "#3c1c5a",
+        "secondaryColorHex": "#f80158",
+        "category": {
+          "name": "England",
+          "slug": "england",
+          "sport": {
+            "name": "Football",
+            "slug": "football",
+            "id": 1
+          },
+          "id": 1,
+          "flag": "england",
+          "alpha2": "EN"
+        },
+        "userCount": 1293862,
+        "hasPerformanceGraphFeature": true,
+        "id": 17,
+        "country": {},
+        "displayInverseHomeAwayTeams": false
+      },
+      "priority": 581,
+      "id": 1
+    },
+    "primaryUniqueTournament": {
+      "name": "Premier League",
+      "slug": "premier-league",
+      "primaryColorHex": "#3c1c5a",
+      "secondaryColorHex": "#f80158",
+      "category": {
+        "name": "England",
+        "slug": "england",
+        "sport": {
+          "name": "Football",
+          "slug": "football",
+          "id": 1
+        },
+        "id": 1,
+        "flag": "england",
+        "alpha2": "EN"
+      },
+      "userCount": 1293862,
+      "hasPerformanceGraphFeature": true,
+      "id": 17,
+      "country": {},
+      "displayInverseHomeAwayTeams": false
+    },
+    "userCount": 1119112,
+    "manager": {
+      "name": "J\u00fcrgen Klopp",
+      "slug": "jurgen-klopp",
+      "shortName": "J. Klopp",
+      "id": 52829,
+      "country": {
+        "alpha2": "DE",
+        "name": "Germany"
+      }
+    },
+    "venue": {
+      "city": { "name": "Liverpool" },
+      "stadium": {
+        "name": "Anfield",
+        "capacity": 53394
+      },
+      "id": 579,
+      "country": {
+        "alpha2": "EN",
+        "name": "England"
+      }
+    },
+    "foundationDate": {},
+    "nameCode": "LIV",
+    "disabled": false,
+    "national": false,
+    "type": 0,
+    "id": 44,
+    "country": {
+      "alpha2": "EN",
+      "name": "England"
+    },
+    "fullName": "Liverpool",
+    "teamColors": {
+      "primary": "#cc0000",
+      "secondary": "#ffffff",
+      "text": "#ffffff"
+    },
+    "foundationDateTimestamp": -2455056000
+  }
+}

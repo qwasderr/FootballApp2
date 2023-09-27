@@ -1,0 +1,115 @@
+{
+  "player": {
+    "name": "Diogo Jota",
+    "firstName": "",
+    "lastName": "",
+    "slug": "diogo-jota",
+    "shortName": "D. Jota",
+    "team": {
+      "name": "Liverpool",
+      "slug": "liverpool",
+      "shortName": "Liverpool",
+      "gender": "M",
+      "sport": {
+        "name": "Football",
+        "slug": "football",
+        "id": 1
+      },
+      "tournament": {
+        "name": "Premier League",
+        "slug": "premier-league",
+        "category": {
+          "name": "England",
+          "slug": "england",
+          "sport": {
+            "name": "Football",
+            "slug": "football",
+            "id": 1
+          },
+          "id": 1,
+          "flag": "england",
+          "alpha2": "EN"
+        },
+        "uniqueTournament": {
+          "name": "Premier League",
+          "slug": "premier-league",
+          "primaryColorHex": "#3c1c5a",
+          "secondaryColorHex": "#f80158",
+          "category": {
+            "name": "England",
+            "slug": "england",
+            "sport": {
+              "name": "Football",
+              "slug": "football",
+              "id": 1
+            },
+            "id": 1,
+            "flag": "england",
+            "alpha2": "EN"
+          },
+          "userCount": 1293862,
+          "id": 17,
+          "country": {},
+          "displayInverseHomeAwayTeams": false
+        },
+        "priority": 580,
+        "id": 1
+      },
+      "primaryUniqueTournament": {
+        "name": "Premier League",
+        "slug": "premier-league",
+        "primaryColorHex": "#3c1c5a",
+        "secondaryColorHex": "#f80158",
+        "category": {
+          "name": "England",
+          "slug": "england",
+          "sport": {
+            "name": "Football",
+            "slug": "football",
+            "id": 1
+          },
+          "id": 1,
+          "flag": "england",
+          "alpha2": "EN"
+        },
+        "userCount": 1293862,
+        "id": 17,
+        "country": {},
+        "displayInverseHomeAwayTeams": false
+      },
+      "userCount": 1119112,
+      "nameCode": "LIV",
+      "disabled": false,
+      "national": false,
+      "type": 0,
+      "id": 44,
+      "country": {
+        "alpha2": "EN",
+        "name": "England"
+      },
+      "teamColors": {
+        "primary": "#cc0000",
+        "secondary": "#ffffff",
+        "text": "#ffffff"
+      }
+    },
+    "position": "F",
+    "jerseyNumber": "20",
+    "height": 178,
+    "preferredFoot": "Right",
+    "userCount": 16573,
+    "id": 606164,
+    "country": {
+      "alpha2": "PT",
+      "name": "Portugal"
+    },
+    "shirtNumber": 20,
+    "dateOfBirthTimestamp": 849657600,
+    "contractUntilTimestamp": 1814313600,
+    "proposedMarketValue": 49000000,
+    "proposedMarketValueRaw": {
+      "value": 49000000,
+      "currency": "EUR"
+    }
+  }
+}

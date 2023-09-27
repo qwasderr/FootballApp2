@@ -10,21 +10,14 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min_5.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebApplication2.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/jqueryui/themes/base/jquery-ui.min.css" />
+    
 </head>
 
 <body class="gradient-custom">
+    
     <style>
-        .gradient-custom {
-            /* fallback for old browsers */
-            background: rgb(242,239,17);
-            background: linear-gradient(0deg, rgba(242,239,17,1) 0%, rgba(45,253,251,1) 100%);
-            
-        }
-
-        html, body {
-            max-width: 100%;
-            overflow-x: hidden;
-        }
+        
     </style>
     
     <header>
@@ -35,7 +28,7 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Політика приватності</a>
@@ -52,6 +45,14 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Diagrams" asp-action="Index">Діаграми</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Maps" asp-action="Index">Мапи</a>
+                        </li>
+                        <feature name="Cat">
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Cat" asp-action="Index">Кіт</a>
+                            </li>
+                        </feature>
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -64,7 +65,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted" style="position: absolute;left: 0;bottom: 0; width:120%">
+    <footer class="border-top footer text-muted" style="position: absolute;left: 0;bottom: 0; width:100%">
         <div class="container">
             &copy; 2023 - Футбольна база - <a asp-area="" asp-controller="Home" asp-action="Privacy">Політика приватності</a>
         </div>
@@ -72,6 +73,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
