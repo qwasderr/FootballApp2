@@ -71,7 +71,7 @@ else
     app.UseMigrationsEndPoint();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -101,7 +101,7 @@ app.Use(async (context, next) =>
         {
             new_https_Url = new_https_Url + sQuerystring;
         }
-        context.Response.Redirect(new_https_Url);
+        context.Response.Redirect(new_https_Url,true);
         return;
     }
     if (sHost.IndexOf("www.") == 0)
@@ -115,7 +115,7 @@ app.Use(async (context, next) =>
         {
             new_Url_without_www = new_Url_without_www + sQuerystring;
         }
-        context.Response.Redirect(new_Url_without_www);
+        context.Response.Redirect(new_Url_without_www,true);
         return;
     }
     await next();
