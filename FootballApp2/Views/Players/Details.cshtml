@@ -1,8 +1,4 @@
 ﻿@model FootballApp2.Models.Player
-
-@{
-    ViewData["Title"] = "Деталі вибраного гравця";
-}
 @using System;
 @using System.Net;
 @using FootballApp2.Models.JsonModels;
@@ -19,6 +15,10 @@
                JsonSerializer.Deserialize<Rootobject>(resp);
     string seo;
 }
+@{
+    ViewData["Title"] = @$"Деталі гравця {player.player.name}";
+}
+
  @{/*#image{
         border-radius: 50%;
         object-fit: cover;
@@ -58,7 +58,7 @@
         margin-top: 5px;
     }
 </style>
-<h1 style="text-align:center">Деталі вибраного гравця</h1>
+<h1 style="text-align:center">Деталі гравця @player.player.name</h1>
 <div>
     @{
         var picurl = Model.PlayerUrl + "/image";
