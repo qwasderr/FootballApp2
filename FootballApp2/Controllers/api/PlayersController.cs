@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FootballApp2.Models;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace FootballApp2.Controllers.api
 {
@@ -14,10 +15,16 @@ namespace FootballApp2.Controllers.api
     public class PlayersController : ControllerBase
     {
         private readonly DbfootballContext _context;
+        private readonly IMemoryCache _memoryCache;
 
-        public PlayersController(DbfootballContext context)
+        public PlayersController(DbfootballContext context, IMemoryCache memoryCache)
         {
             _context = context;
+            _memoryCache= memoryCache;
+            foreach (var player in _context.Players)
+            {
+                player.Team = _context.Teams.Where(t => t.Id == player.TeamId).FirstOrDefault();
+            }
 
         }
 
@@ -29,6 +36,7 @@ namespace FootballApp2.Controllers.api
             {
                 return NotFound();
             }
+            
             return await _context.Players.ToListAsync();
         }
 
@@ -40,13 +48,17 @@ namespace FootballApp2.Controllers.api
             {
                 return NotFound();
             }
-            var player = await _context.Players.FindAsync(id);
-
-            if (player == null)
+            Player player = null;
+            if (!_memoryCache.TryGetValue(id, out player))
             {
-                return NotFound();
-            }
+                player = await _context.Players.FindAsync(id);
 
+                if (player == null)
+                {
+                    return NotFound();
+                }
+                _memoryCache.Set(player.Id, player, new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(5)));
+            }
             return player;
         }
 
@@ -90,6 +102,10 @@ namespace FootballApp2.Controllers.api
             {
                 return Problem("Entity set 'LBAPIContext.Players'  is null.");
             }
+            _memoryCache.Set(player.Id, player, new MemoryCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5)
+            });
             _context.Players.Add(player);
             await _context.SaveChangesAsync();
 

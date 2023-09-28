@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FootballApp2.Models;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace FootballApp2.Controllers.api
 {
@@ -96,7 +97,7 @@ namespace FootballApp2.Controllers.api
         {
             if (_context.Countries == null)
             {
-                return Problem("Entity set 'LBAPIContext.Countries'  is null.");
+                return Problem("Entity set 'DbfootballContext.Countries'  is null.");
             }
             /*_context.Countries.Add(country);
             await _context.SaveChangesAsync();

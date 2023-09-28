@@ -14,7 +14,7 @@ using System.Configuration;
 using Microsoft.FeatureManagement.FeatureFilters;
 using FootballApp2.Services;
 using Microsoft.AspNetCore.Rewrite;
-
+using FootballApp2.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -48,7 +48,8 @@ builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizePage("/Home/Privacy");
 });
-
+builder.Services.AddTransient<IAzureService,AzureService>();
+builder.Services.AddMemoryCache();
 builder.Services.AddMapBoxServices(options => options.UseApiKey(builder.Configuration["MapboxApiKey"]));
 builder.Services.AddAuthentication().AddGoogle(googleOptions =>
 {
@@ -71,7 +72,7 @@ else
     app.UseMigrationsEndPoint();
 }
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -83,7 +84,7 @@ app.MapControllerRoute(
    name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
-app.Use(async (context, next) =>
+/*app.Use(async (context, next) =>
 {
     string sHost = context.Request.Host.HasValue == true ? context.Request.Host.Value : "";
     sHost = sHost.ToLower();
@@ -119,7 +120,7 @@ app.Use(async (context, next) =>
         return;
     }
     await next();
-});
+});*/
 //app.UseRewriter(new RewriteOptions().AddRedirectToNonWwwPermanent().AddRedirectToHttpsPermanent());
 app.Run();
 public partial class Program { }
