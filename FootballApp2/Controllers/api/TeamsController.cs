@@ -43,7 +43,7 @@ namespace FootballApp2.Controllers.api
             double a = _context.Teams.Count() / (double)limit;
             pag.total = (int)Math.Ceiling(a);
             pag.team = res;
-            pag.nextLink = skip+1<pag.total ? $"/api/Teams/?skip={skip+1}&limit={limit}" : null;
+            pag.nextLink = skip+1<pag.total ? $"/api/Teams/params/?skip={skip+1}&limit={limit}" : null;
             return pag;
         }
 

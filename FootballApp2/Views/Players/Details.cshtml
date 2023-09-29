@@ -6,15 +6,31 @@
 @using System.Text.RegularExpressions;
 @using AngleSharp;
 @using FootballApp2.Models.JsonModels.RootJsonModel;
+@using FootballApp2.Models.JsonModels.RootJsonModelTeam;
+@using System.Reflection;
 @{
+
+
+
+
+    //string uri = Model.PlayerUrl;
+    string seo;
+    string standingswidget;
+    string seot1, seot2, seot3, seot4;
+    string[] substrings = Model.PlayerUrl.Split("/");
+    var len = substrings.Length;
+    var widget = "https://widgets.sofascore.com/embed/player/" + substrings[len - 1];
+    string uri = $"https://api.sofascore.app/api/v1/player/{substrings[len - 1]}";
+    //string playerUrl = $"https://www.sofascore.com/player/{slug}/{substrings[len - 1]}";
+    var picurl = uri + "/image";
     HttpClient _client = new HttpClient();
-    string uri = Model.PlayerUrl;
     using HttpResponseMessage response = await _client.GetAsync(uri);
     var resp = await response.Content.ReadAsStringAsync();
     Rootobject? player =
                JsonSerializer.Deserialize<Rootobject>(resp);
-    string seo;
-}
+    var slug = player.player.slug;
+    var tournamentUrl = $"https://www.sofascore.com/tournament/football/{player.player.team.tournament.category.slug}/{player.player.team.tournament.slug}/{player.player.team.tournament.uniqueTournament.id}";
+}   
 @{
     ViewData["Title"] = @$"Деталі гравця {player.player.name}";
 }
@@ -23,57 +39,41 @@
         border-radius: 50%;
         object-fit: cover;
     }*/}
+<link rel="preload" href="/css/Details_style.css" as="style" onload="this.rel='stylesheet'">
 <style>
-    .row {
-        font-family: cursive, sans-serif;
-        background-color: #2ecc71;
-        color: white;
-        padding: 10px;
-        border-radius: 4px;
-        box-shadow: 2px 2px 20px 23px #7fecad;
-         display: flex;
-        justify-content: center;
-        align-items: center;
+    #image {
+        border-radius: 50%;
+        object-fit: cover;
     }
-    .button {
-        background: #5E5DF0;
-        border-radius: 999px;
-        box-shadow: #5E5DF0 0 10px 20px -10px;
-        box-sizing: border-box;
-        color: #FFFFFF;
-        cursor: pointer;
-        font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
-        font-size: 16px;
-        font-weight: 700;
-        line-height: 24px;
-        opacity: 1;
-        outline: 0 solid transparent;
-        padding: 8px 18px;
-        user-select: none;
-        -webkit-user-select: none;
-        touch-action: manipulation;
-        width: fit-content;
-        word-break: break-word;
-        border: 0;
-        margin-top: 5px;
+
+    #widget {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 20px;
+        width: 100%;
+    }
+
+    #sofa-player {
+        height: 728px !important;
+        max-width: 420px !important;
+        width: 100% !important;
+        margin: 10px;
+    }
+
+    #sofa-standings {
+        height: 738px !important;
+        max-width: 620px !important;
+        width: 100% !important;
+        margin: 10px;
     }
 </style>
 <h1 style="text-align:center">Деталі гравця @player.player.name</h1>
 <div>
     @{
-        var picurl = Model.PlayerUrl + "/image";
-        string[] substrings = Model.PlayerUrl.Split("/");
-        var len = substrings.Length;
-        var widget = "https://widgets.sofascore.com/embed/player/" + substrings[len-1];
-        var slug = player.player.slug;
-        string playerUrl = $"https://www.sofascore.com/player/{slug}/{substrings[len - 1]}";
-
-    }
-    @{
 
         using (HttpClient client = new HttpClient())
         {
-            using (HttpResponseMessage response2 = await client.GetAsync(playerUrl))
+            using (HttpResponseMessage response2 = await client.GetAsync(Model.PlayerUrl))
             {
                 using (HttpContent content = response2.Content)
                 {
@@ -91,6 +91,31 @@
                     var a = 1;
                 }
             }
+            using (HttpResponseMessage response2 = await client.GetAsync(tournamentUrl))
+            {
+                using (HttpContent content = response2.Content)
+                {
+                    string result = await content.ReadAsStringAsync();
+                    var config = Configuration.Default;
+                    using var context = BrowsingContext.New(config);
+                    using var doc = await context.OpenAsync(req => req.Content(result));
+                    //var AllDiv = doc.All.Where(m => m.LocalName == "script" && m.HasAttribute("id") && m.GetAttribute("id").StartsWith("__NEXT_DATA__"));
+
+                    var script = doc.All.Where(m => m.LocalName == "script" && m.Id == "__NEXT_DATA__").FirstOrDefault();
+                    var json = script.InnerHtml;
+                    Rootobject3? info =
+                    JsonSerializer.Deserialize<Rootobject3>(json);
+                    //List<string> seotournament=new List<string>();
+                    /*seot1 = info.props.messages.tournamentaboutfootballleague25;
+                    seot2 = info.props.messages.tournamentaboutfootballleague26;
+                    seot3 = info.props.messages.tournamentaboutfootballleague27;
+                    seot4 = info.props.messages.tournamentaboutfootballleague28;*/
+                    var seasonId = info.props.pageProps.seasons[0].id;
+                    var tournamentId = info.props.footerEvents[0].tournament.id;
+                    standingswidget = $"https://widgets.sofascore.com/embed/tournament/{tournamentId}/season/{seasonId}/standings";
+                    var a = 1;
+                }
+            }
         }
         
         
@@ -101,10 +126,7 @@
     <div id="bc1">
     <div class="headdiv" >
     <img src=@picurl id="image" alt="PlayerPhoto"></img>
-                <a id="playername" style="font: 700 18px / 1.33 'Sofascore Sans', sans-serif;
-                   margin: 5px;
-                   text-align: left;
-                   margin-bottom: 2px;">@player.player.name</a>
+                <a id="playername">@player.player.name</a>
     </div>
     <hr />
     <dl class="row">
@@ -160,9 +182,10 @@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.PlayerUrl)
         </dt>
-                <dd class="col-sm-10">
-                    <a href="@playerUrl">@playerUrl</a>
-                </dd>
+        <dd class="col-sm-10">
+                    <a href="@Html.DisplayFor(model => model.PlayerUrl)">@Html.DisplayFor(model => model.PlayerUrl)</a>
+                    
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Team)
         </dt>
@@ -172,18 +195,31 @@
     </dl>
 </div>
 </div>
-    <div id="widget" >
-        <div>
+
+    <div id="widget">
+        <div style="align-items:center; text-align:center">
+            <p>Статистика гравця</p>
     <iframe id="sofa-player" src=@widget
-                frameborder="0" scrolling="no" style="margin-top:30px;
-        height: 728px !important;
-        max-width:420px !important;
-        width: 100% !important;"></iframe>
+                frameborder="0" scrolling="no"></iframe>
         </div>
-        <div style="word-wrap:normal; margin-top:20px;margin-bottom:30px; border-style:ridge; border-color:#7922cc">
-            @Html.Raw(seo)
+        <div style="align-items:center; text-align:center">
+            <p>Турнірна таблиця чемпіонату</p>
+            <iframe id="sofa-standings" src=@standingswidget
+                    frameborder="0" scrolling="no"></iframe>
         </div>
     </div>
+        <div id ="seocontent">
+            @Html.Raw(seo)
+        </div>
+        <div>
+        <p>
+            Stay connected with us for the latest updates on @player.player.name's career. Don't miss a beat of their extraordinary career! Explore our website regularly for more football news, insights, and exclusive content, and join us in celebrating the incredible journey of this football icon.
+        </p>
+        <p>
+            How to Stay Connected:</p>
+        <ol><li>Subscribe: Subscribe to our newsletter to receive regular updates in your inbox.</li><li>Follow Us: Follow us on social media platforms like Twitter, Facebook, and Instagram for real-time updates and engaging content.</li><li>Bookmark: Don't forget to bookmark our website and check back frequently for the latest news.</li></ol>
+        </div>
+    
     <div class="buttons">
         <a asp-action="Edit" asp-route-id="@Model?.Id" class="button">Редагувати</a> |
         <a asp-action="Index" class="button">Повернутись назад</a>

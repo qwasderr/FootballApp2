@@ -32,10 +32,7 @@ namespace FootballApp2Tests
         [InlineData("/Home/Privacy")]
         public async Task Get_EndpointsReturnSuccessAndCorrectContentType(string url)
         {
-            // Arrange
             var client = _factory.CreateClient();
-
-            // Act
             var response = await client.GetAsync(url);
             response.EnsureSuccessStatusCode();
             Assert.Equal("text/html; charset=utf-8",
@@ -44,17 +41,12 @@ namespace FootballApp2Tests
         [Fact]
         public async Task Get_SecurePageRedirectsAnUnauthenticatedUser()
         {
-            // Arrange
             var client = _factory.CreateClient(
                 new WebApplicationFactoryClientOptions
                 {
                     AllowAutoRedirect = false
                 });
-
-            // Act
             var response = await client.GetAsync("/Diagrams");
-
-            // Assert
             Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
             Assert.StartsWith("http://localhost/Identity/Account/Login",
                 response.Headers.Location.OriginalString);
@@ -80,9 +72,6 @@ namespace FootballApp2Tests
             var response = await client.GetAsync("https://localhost/Diagrams");
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
-
-
-
         public class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
         {
             public TestAuthHandler(IOptionsMonitor<AuthenticationSchemeOptions> options,
@@ -90,7 +79,6 @@ namespace FootballApp2Tests
                 : base(options, logger, encoder, clock)
             {
             }
-
             protected override Task<AuthenticateResult> HandleAuthenticateAsync()
             {
                 var claims = new[] { new Claim(ClaimTypes.Name, "Test user") };

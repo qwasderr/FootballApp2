@@ -82,7 +82,7 @@ namespace FootballApp2.Controllers
         }
         public JsonResult CountryNames(string s)
         {
-            var res = (from temp in _context.Countries where temp.Name.StartsWith(s) select temp).ToList();
+            var res = (from temp in _context.Countries where temp.Name.Contains(s) select temp).ToList();
             return Json(res);
         }
         // POST: Countries/Create

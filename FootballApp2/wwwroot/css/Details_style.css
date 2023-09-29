@@ -1,0 +1,48 @@
+﻿.row {
+    font-family: cursive,sans-serif;
+    background-color: #2ecc71;
+    color: #fff;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 2px 2px 20px 23px #7fecad;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.button {
+    background: #5e5df0;
+    border-radius: 999px;
+    box-shadow: #5e5df0 0 10px 20px -10px;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    opacity: 1;
+    outline: transparent solid 0;
+    padding: 8px 18px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: fit-content;
+    word-break: break-word;
+    border: 0;
+    margin-top: 5px
+}
+
+#playername {
+    font: 700 18px/1.33 "Sofascore Sans",sans-serif;
+    margin: 5px 5px 2px;
+    text-align: left
+}
+#seocontent {
+    word-wrap: normal;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    border-style: ridge;
+    border-color: #7922cc
+}
+
